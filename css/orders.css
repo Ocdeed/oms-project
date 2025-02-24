@@ -1,0 +1,263 @@
+.quick-actions-panel {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.filter-actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.date-filter {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--bg-light);
+  padding: 8px 15px;
+  border-radius: 8px;
+  gap: 10px;
+}
+
+.date-filter select {
+  border: none;
+  background: none;
+  color: var(--text-color);
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding-right: 20px;
+}
+
+.search-orders {
+  position: relative;
+  width: 250px;
+}
+
+.search-orders input {
+  width: 100%;
+  padding: 8px 15px 8px 35px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.search-orders i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+}
+
+/* Orders Table */
+.orders-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 15px;
+  text-align: left;
+}
+
+.orders-table th {
+  background: var(--bg-light);
+  font-weight: 600;
+}
+
+.orders-table td {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.order-id {
+  display: block;
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.order-date {
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+.customer-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.customer-info img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.customer-info h4 {
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+}
+
+.customer-info span {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.order-amount {
+  display: flex;
+  flex-direction: column;
+}
+
+.amount {
+  font-weight: 600;
+}
+
+.items {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+/* Status Badges */
+.status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.status.processing {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.payment-status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  display: inline-block;
+}
+
+.payment-status.paid {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+/* Order Form */
+.order-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.form-section {
+  padding: 20px;
+  background: var(--bg-light);
+  border-radius: 8px;
+}
+
+.form-section h4 {
+  margin-bottom: 15px;
+  font-size: 1rem;
+}
+
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.order-item {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.item-details {
+  display: flex;
+  gap: 15px;
+  flex: 1;
+}
+
+.item-select {
+  flex: 2;
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+}
+
+.item-price {
+  font-weight: 600;
+  min-width: 120px;
+  text-align: right;
+}
+
+.order-summary {
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.summary-row.total {
+  border-bottom: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .quick-actions-panel {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .filter-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 768px) {
+  .filter-actions {
+    flex-wrap: wrap;
+  }
+
+  .search-orders {
+    width: 100%;
+  }
+
+  .order-item {
+    flex-direction: column;
+  }
+
+  .item-details {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .customer-info {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .orders-table {
+    font-size: 0.9rem;
+  }
+}

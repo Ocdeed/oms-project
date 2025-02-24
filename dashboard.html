@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+      integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <script src="js/dashboard.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+    <title>ZanAir Cargo | Dashboard</title>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="brand">
+            <i class="fas fa-plane"></i>
+            <span>ZanAir OMS</span>
+          </div>
+        </div>
+
+        <div class="sidebar-user">
+          <img src="Images/ocdeed.png" alt="Profile" />
+          <div class="user-info">
+            <span class="user-name">Octavian</span>
+            <span class="user-role">Administrator</span>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <ul>
+            <li class="active">
+              <a href="#" data-page="dashboard">
+                <i class="fas fa-home"></i><span>Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="/fleet-management.html" data-page="fleet">
+                <i class="fas fa-truck-moving"></i><span>Fleet Management</span>
+              </a>
+            </li>
+            <li>
+              <a href="/track-shipments.html"
+                ><i class="fas fa-route"></i>Track Shipments</a
+              >
+            </li>
+            <li>
+              <a href="/drivers.html"><i class="fas fa-users"></i>Drivers</a>
+            </li>
+            <li>
+              <a href="/orders.html"><i class="fas fa-box"></i>Orders</a>
+            </li>
+            <li>
+              <a href="/analytics.html"
+                ><i class="fas fa-chart-line"></i>Analytics</a
+              >
+            </li>
+            <li>
+              <a href="/messages.html"
+                ><i class="fas fa-message"></i>Messages</a
+              >
+            </li>
+            <li>
+              <a href="/settings.html"><i class="fas fa-cog"></i>Settings</a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="topbar-left">
+            <button id="sidebar-toggle" aria-label="Toggle Sidebar">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input type="text" placeholder="Search anything..." />
+              <div class="search-suggestions">
+                <div class="suggestion-group">
+                  <h4>Quick Actions</h4>
+                  <a href="#"><i class="fas fa-plus"></i> New Shipment</a>
+                  <a href="#"><i class="fas fa-truck"></i> Track Order</a>
+                </div>
+                <div class="suggestion-group">
+                  <h4>Recent Searches</h4>
+                  <a href="#"><i class="fas fa-history"></i> Order #TK4528</a>
+                  <a href="#"><i class="fas fa-history"></i> Driver John</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stats-ticker">
+            <div class="ticker-item">
+              <i class="fas fa-clock"></i>
+              <span>Active Time: 8h 45m</span>
+            </div>
+            <div class="ticker-item positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>Deliveries: +12.5%</span>
+            </div>
+            <div class="ticker-item warning">
+              <i class="fas fa-exclamation-triangle"></i>
+              <span>3 Delayed Shipments</span>
+            </div>
+          </div>
+
+          <div class="topbar-right">
+            <div class="quick-actions">
+              <button class="action-btn" title="Create New Order">
+                <i class="fas fa-plus"></i>
+              </button>
+              <button class="action-btn" title="Download Reports">
+                <i class="fas fa-download"></i>
+              </button>
+            </div>
+
+            <div class="notifications-wrapper">
+              <button class="notification-btn" id="notificationToggle">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+              </button>
+              <div class="notifications-panel" id="notificationsPanel">
+                <div class="notifications-header">
+                  <h3>Notifications</h3>
+                  <button class="mark-all-read">Mark all as read</button>
+                </div>
+                <div class="notifications-list">
+                  <a href="#" class="notification-item unread">
+                    <div class="notification-icon urgent">
+                      <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="notification-content">
+                      <p class="notification-text">
+                        Urgent: Shipment #TK4528 delayed
+                      </p>
+                      <span class="notification-time">5 minutes ago</span>
+                    </div>
+                  </a>
+                  <!-- More notification items -->
+                </div>
+                <a href="#" class="view-all">View All Notifications</a>
+              </div>
+            </div>
+
+            <div class="profile-wrapper">
+              <button class="profile-btn" id="profileToggle">
+                <img src="Images/ocdeed.png" alt="Profile" />
+                <span class="profile-name">Octavian</span>
+                <i class="fas fa-chevron-down"></i>
+              </button>
+              <div class="profile-dropdown" id="profileDropdown">
+                <div class="profile-header">
+                  <img src="Images/ocdeed.png" alt="Profile" />
+                  <div class="profile-info">
+                    <h4>Octavian Deed</h4>
+                    <p>Administrator</p>
+                  </div>
+                </div>
+                <div class="profile-menu">
+                  <a href="#"><i class="fas fa-user"></i> My Profile</a>
+                  <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                  <a href="#"><i class="fas fa-chart-line"></i> Activity Log</a>
+                  <div class="divider"></div>
+                  <a href="#" class="logout"
+                    ><i class="fas fa-sign-out-alt"></i> Logout</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div class="dashboard-content">
+          <div class="dashboard-cards">
+            <div class="card">
+              <div class="card-info">
+                <h3>Total Orders</h3>
+                <h2>1,257</h2>
+                <div class="trend positive">
+                  <i class="fas fa-arrow-up"></i>
+                  <span>12.5%</span>
+                  <span class="period">vs last month</span>
+                </div>
+              </div>
+              <i class="fas fa-shopping-cart"></i>
+            </div>
+            <div class="card">
+              <div class="card-info">
+                <h3>Revenue</h3>
+                <h2>TZS 113,142,500</h2>
+                <p>+8.3% from last month</p>
+              </div>
+              <i class="fas fa-dollar-sign"></i>
+            </div>
+            <div class="card">
+              <div class="card-info">
+                <h3>Active Shipments</h3>
+                <h2>384</h2>
+                <p>+23.1% from last month</p>
+              </div>
+              <i class="fas fa-truck-moving"></i>
+            </div>
+            <div class="card">
+              <div class="card-info">
+                <h3>Customers</h3>
+                <h2>892</h2>
+                <p>+15.7% from last month</p>
+              </div>
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="card">
+              <div class="card-info">
+                <h3>Active Drivers</h3>
+                <h2>45</h2>
+                <p>12 Currently On-Route</p>
+              </div>
+              <i class="fas fa-user-tie"></i>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="grid-card chart">
+              <div class="card-header">
+                <div class="header-left">
+                  <h3>Revenue Overview</h3>
+                  <span class="subtitle"
+                    >Total revenue for this week: TZS 245,000,000</span
+                  >
+                </div>
+                <div class="card-actions">
+                  <button class="btn-icon" title="Download Report">
+                    <i class="fas fa-download"></i>
+                  </button>
+                  <div class="date-range">
+                    <button class="btn-text active" data-range="weekly">
+                      Weekly
+                    </button>
+                    <button class="btn-text" data-range="monthly">
+                      Monthly
+                    </button>
+                    <button class="btn-text" data-range="yearly">Yearly</button>
+                  </div>
+                </div>
+              </div>
+              <div class="chart-container">
+                <canvas id="revenueChart"></canvas>
+              </div>
+            </div>
+            <div class="grid-card recent-orders">
+              <div class="card-header">
+                <h3>Recent Orders</h3>
+                <button class="btn-text">View All</button>
+              </div>
+              <div class="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Customer</th>
+                      <th>Status</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>#ORD-7842</td>
+                      <td>
+                        <div class="user-info">
+                          <img src="Images/customer1.jpg" alt="Customer" />
+                          <span>John Doe</span>
+                        </div>
+                      </td>
+                      <td>
+                        <span class="status delivered"
+                          ><i class="fas fa-check-circle"></i>Delivered</span
+                        >
+                      </td>
+                      <td>TZS 1,145,000</td>
+                    </tr>
+                    <!-- Add more rows as needed -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="grid-card map-view">
+              <h3>Live Fleet Tracking</h3>
+              <div id="fleet-map"></div>
+            </div>
+            <div class="grid-card weather-alerts">
+              <h3>Weather Alerts</h3>
+              <div class="weather-list">
+                <div class="weather-item warning">
+                  <i class="fas fa-exclamation-triangle"></i>
+                  <span>Heavy Rain Alert - Route A1</span>
+                </div>
+                <div class="weather-item info">
+                  <i class="fas fa-info-circle"></i>
+                  <span>Clear conditions - Route B3</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="grid-card shipment-tracking">
+              <h3>Active Shipments</h3>
+              <div class="tracking-list">
+                <div class="tracking-item">
+                  <div class="tracking-info">
+                    <h4>Shipment #TK4528</h4>
+                    <p>New York → Los Angeles</p>
+                    <div class="progress">
+                      <div class="progress-bar" style="width: 65%"></div>
+                    </div>
+                  </div>
+                  <span class="status in-transit">In Transit</span>
+                </div>
+                <!-- Add more tracking items -->
+              </div>
+            </div>
+
+            <div class="grid-card chat-system">
+              <h3>Messages</h3>
+              <div class="chat-container">
+                <div class="chat-list">
+                  <div class="chat-item active">
+                    <img src="Images/driver1.jpg" alt="Driver" />
+                    <div class="chat-info">
+                      <h4>John Driver</h4>
+                      <p>ETA update: Arriving in 2 hours</p>
+                    </div>
+                    <span class="time">5m</span>
+                  </div>
+                  <!-- Add more chat items -->
+                </div>
+                <div class="chat-messages">
+                  <!-- Messages will be loaded dynamically -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="js/fleet-tracking.js"></script>
+    <script src="js/chat-system.js"></script>
+  </body>
+</html>

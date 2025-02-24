@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+      integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/fleet-management.css" />
+    <link rel="stylesheet" href="css/track-shipments.css" />
+    <link rel="stylesheet" href="css/orders.css" />
+    <link rel="stylesheet" href="css/drivers.css" />
+    <link rel="stylesheet" href="css/analytics.css" />
+    <script src="js/dashboard.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+    <title>ZanAir Cargo | Dashboard</title>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="brand">
+            <i class="fas fa-plane"></i>
+            <span>ZanAir OMS</span>
+          </div>
+        </div>
+
+        <div class="sidebar-user">
+          <img src="Images/ocdeed.png" alt="Profile" />
+          <div class="user-info">
+            <span class="user-name">Octavian</span>
+            <span class="user-role">Administrator</span>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="#" data-page="dashboard">
+                <i class="fas fa-home"></i><span>Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="#fleet-management.html" data-page="fleet">
+                <i class="fas fa-truck-moving"></i><span>Fleet Management</span>
+              </a>
+            </li>
+            <li >
+              <a href="/track-shipments.html"
+                ><i class="fas fa-route"></i>Track Shipments</a
+              >
+            </li class="active">
+            <li>
+              <a href="/drivers.html"><i class="fas fa-users"></i>Drivers</a>
+            </li>
+            <li>
+              <a href="/orders.html"><i class="fas fa-box"></i>Orders</a>
+            </li>
+            <li>
+              <a href="/analytics.html"><i class="fas fa-chart-line"></i>Analytics</a>
+            </li>
+            <li>
+              <a href="/messages.html"><i class="fas fa-message"></i>Messages</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-cog"></i>Settings</a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="topbar-left">
+            <button id="sidebar-toggle" aria-label="Toggle Sidebar">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input type="text" placeholder="Search anything..." />
+              <div class="search-suggestions">
+                <div class="suggestion-group">
+                  <h4>Quick Actions</h4>
+                  <a href="#"><i class="fas fa-plus"></i> New Shipment</a>
+                  <a href="#"><i class="fas fa-truck"></i> Track Order</a>
+                </div>
+                <div class="suggestion-group">
+                  <h4>Recent Searches</h4>
+                  <a href="#"><i class="fas fa-history"></i> Order #TK4528</a>
+                  <a href="#"><i class="fas fa-history"></i> Driver John</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stats-ticker">
+            <div class="ticker-item">
+              <i class="fas fa-clock"></i>
+              <span>Active Time: 8h 45m</span>
+            </div>
+            <div class="ticker-item positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>Deliveries: +12.5%</span>
+            </div>
+            <div class="ticker-item warning">
+              <i class="fas fa-exclamation-triangle"></i>
+              <span>3 Delayed Shipments</span>
+            </div>
+          </div>
+
+          <div class="topbar-right">
+            <div class="quick-actions">
+              <button class="action-btn" title="Create New Order">
+                <i class="fas fa-plus"></i>
+              </button>
+              <button class="action-btn" title="Download Reports">
+                <i class="fas fa-download"></i>
+              </button>
+            </div>
+
+            <div class="notifications-wrapper">
+              <button class="notification-btn" id="notificationToggle">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+              </button>
+              <div class="notifications-panel" id="notificationsPanel">
+                <div class="notifications-header">
+                  <h3>Notifications</h3>
+                  <button class="mark-all-read">Mark all as read</button>
+                </div>
+                <div class="notifications-list">
+                  <a href="#" class="notification-item unread">
+                    <div class="notification-icon urgent">
+                      <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="notification-content">
+                      <p class="notification-text">
+                        Urgent: Shipment #TK4528 delayed
+                      </p>
+                      <span class="notification-time">5 minutes ago</span>
+                    </div>
+                  </a>
+                  <!-- More notification items -->
+                </div>
+                <a href="#" class="view-all">View All Notifications</a>
+              </div>
+            </div>
+
+            <div class="profile-wrapper">
+              <button class="profile-btn" id="profileToggle">
+                <img src="Images/ocdeed.png" alt="Profile" />
+                <span class="profile-name">Octavian</span>
+                <i class="fas fa-chevron-down"></i>
+              </button>
+              <div class="profile-dropdown" id="profileDropdown">
+                <div class="profile-header">
+                  <img src="Images/ocdeed.png" alt="Profile" />
+                  <div class="profile-info">
+                    <h4>Octavian Deed</h4>
+                    <p>Administrator</p>
+                  </div>
+                </div>
+                <div class="profile-menu">
+                  <a href="#"><i class="fas fa-user"></i> My Profile</a>
+                  <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                  <a href="#"><i class="fas fa-chart-line"></i> Activity Log</a>
+                  <div class="divider"></div>
+                  <a href="#" class="logout"
+                    ><i class="fas fa-sign-out-alt"></i> Logout</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+    <!-- Same sidebar and header structure -->
+    <div class="dashboard-content">
+      <!-- Analytics Overview Cards -->
+      <div class="dashboard-cards">
+        <div class="card revenue">
+          <div class="card-info">
+            <h3>Total Revenue</h3>
+            <h2>TZS 245,850,000</h2>
+            <div class="trend positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>18.3%</span>
+              <span class="period">vs last month</span>
+            </div>
+          </div>
+          <i class="fas fa-chart-line"></i>
+        </div>
+
+        <div class="card deliveries">
+          <div class="card-info">
+            <h3>Successful Deliveries</h3>
+            <h2>3,842</h2>
+            <div class="trend success">
+              <i class="fas fa-check-circle"></i>
+              <span>98.5% Success Rate</span>
+            </div>
+          </div>
+          <i class="fas fa-box-check"></i>
+        </div>
+
+        <div class="card efficiency">
+          <div class="card-info">
+            <h3>Fleet Efficiency</h3>
+            <h2>85.4%</h2>
+            <div class="trend neutral">
+              <i class="fas fa-tachometer-alt"></i>
+              <span>+5.2% Utilization</span>
+            </div>
+          </div>
+          <i class="fas fa-truck-moving"></i>
+        </div>
+
+        <div class="card cost">
+          <div class="card-info">
+            <h3>Operating Costs</h3>
+            <h2>TZS 78,450,000</h2>
+            <div class="trend negative">
+              <i class="fas fa-arrow-down"></i>
+              <span>-12.3% Reduction</span>
+            </div>
+          </div>
+          <i class="fas fa-coins"></i>
+        </div>
+      </div>
+
+      <!-- Main Analytics Grid -->
+      <div class="analytics-grid">
+        <!-- Revenue Analysis -->
+        <div class="grid-card revenue-analysis">
+          <div class="card-header">
+            <div class="header-left">
+              <h3>Revenue Analysis</h3>
+              <span class="subtitle">Financial performance overview</span>
+            </div>
+            <div class="chart-actions">
+              <div class="date-range">
+                <button class="btn-text active">Week</button>
+                <button class="btn-text">Month</button>
+                <button class="btn-text">Year</button>
+              </div>
+              <button class="btn-icon" title="Download Report">
+                <i class="fas fa-download"></i>
+              </button>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="revenueChart"></canvas>
+          </div>
+          <div class="metrics-grid">
+            <div class="metric">
+              <span class="label">Average Order Value</span>
+              <span class="value">TZS 185,000</span>
+              <span class="trend positive">+8.5%</span>
+            </div>
+            <div class="metric">
+              <span class="label">Revenue per Vehicle</span>
+              <span class="value">TZS 2,450,000</span>
+              <span class="trend positive">+12.3%</span>
+            </div>
+            <div class="metric">
+              <span class="label">Cost per Delivery</span>
+              <span class="value">TZS 45,000</span>
+              <span class="trend negative">-3.2%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Performance Metrics -->
+        <div class="grid-card performance-metrics">
+          <div class="card-header">
+            <h3>Key Performance Indicators</h3>
+            <div class="period-selector">
+              <select>
+                <option>This Month</option>
+                <option>Last Month</option>
+                <option>Last Quarter</option>
+              </select>
+            </div>
+          </div>
+          <div class="metrics-container">
+            <div class="metric-row">
+              <div class="metric-info">
+                <h4>On-Time Delivery Rate</h4>
+                <span class="percentage">94.5%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" style="width: 94.5%"></div>
+              </div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-info">
+                <h4>Vehicle Utilization</h4>
+                <span class="percentage">85.4%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" style="width: 85.4%"></div>
+              </div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-info">
+                <h4>Customer Satisfaction</h4>
+                <span class="percentage">92.8%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" style="width: 92.8%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Route Analytics -->
+        <div class="grid-card route-analytics">
+          <div class="card-header">
+            <h3>Route Performance</h3>
+            <button class="btn-text">View Details</button>
+          </div>
+          <div class="route-map" id="routeMap"></div>
+          <div class="route-stats">
+            <div class="stat-item">
+              <h4>Most Profitable Route</h4>
+              <p>Dar es Salaam → Zanzibar</p>
+              <span class="value">TZS 4.5M / week</span>
+            </div>
+            <div class="stat-item">
+              <h4>Busiest Route</h4>
+              <p>Stone Town → Nungwi</p>
+              <span class="value">142 trips / week</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cost Analysis -->
+        <div class="grid-card cost-analysis">
+          <div class="card-header">
+            <h3>Cost Breakdown</h3>
+            <div class="chart-type">
+              <button class="btn-icon active" title="Pie Chart">
+                <i class="fas fa-chart-pie"></i>
+              </button>
+              <button class="btn-icon" title="Bar Chart">
+                <i class="fas fa-chart-bar"></i>
+              </button>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="costChart"></canvas>
+          </div>
+          <div class="cost-legend">
+            <div class="legend-item">
+              <span class="color-dot fuel"></span>
+              <span class="label">Fuel</span>
+              <span class="value">45%</span>
+            </div>
+            <div class="legend-item">
+              <span class="color-dot maintenance"></span>
+              <span class="label">Maintenance</span>
+              <span class="value">25%</span>
+            </div>
+            <div class="legend-item">
+              <span class="color-dot staff"></span>
+              <span class="label">Staff</span>
+              <span class="value">20%</span>
+            </div>
+            <div class="legend-item">
+              <span class="color-dot other"></span>
+              <span class="label">Other</span>
+              <span class="value">10%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trends and Predictions -->
+      <div class="analytics-grid">
+        <div class="grid-card trends">
+          <div class="card-header">
+            <h3>Growth Trends</h3>
+            <select class="trend-period">
+              <option>Last 12 Months</option>
+              <option>Last 6 Months</option>
+              <option>Last 3 Months</option>
+            </select>
+          </div>
+          <div class="chart-container">
+            <canvas id="trendChart"></canvas>
+          </div>
+        </div>
+
+        <div class="grid-card predictions">
+          <div class="card-header">
+            <h3>Future Projections</h3>
+            <button class="btn-text">View Forecast</button>
+          </div>
+          <div class="prediction-cards">
+            <div class="prediction-item">
+              <h4>Expected Revenue</h4>
+              <span class="value">TZS 285M</span>
+              <span class="period">Next Month</span>
+              <span class="trend positive">+15.2%</span>
+            </div>
+            <!-- More prediction items -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="js/fleet-tracking.js"></script>
+    <script src="js/chat-system.js"></script>
+    <script src="js/fleet-management.js"></script>
+    <script src="js/track-shipments.js"></script>
+    <script src="js/drivers.js"></script>
+    <script src="js/analytics.js"></script>
+  </body>
+</html>

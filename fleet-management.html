@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+      integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/fleet-management.css" />
+    <script src="js/dashboard.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+    <title>ZanAir Cargo | Dashboard</title>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="brand">
+            <i class="fas fa-plane"></i>
+            <span>ZanAir OMS</span>
+          </div>
+        </div>
+
+        <div class="sidebar-user">
+          <img src="Images/ocdeed.png" alt="Profile" />
+          <div class="user-info">
+            <span class="user-name">Octavian</span>
+            <span class="user-role">Administrator</span>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <ul>
+            <li >
+              <a href="#" data-page="dashboard">
+                <i class="fas fa-home"></i><span>Dashboard</span>
+              </a>
+            </li>
+            <li class="active">
+              <a href="#fleet-management.html" data-page="fleet">
+                <i class="fas fa-truck-moving"></i><span>Fleet Management</span>
+              </a>
+            </li>
+            <li>
+              <a href="/track-shipments.html"><i class="fas fa-route"></i>Track Shipments</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-users"></i>Drivers</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-box"></i>Orders</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-chart-line"></i>Analytics</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-message"></i>Messages</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-cog"></i>Settings</a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="topbar-left">
+            <button id="sidebar-toggle" aria-label="Toggle Sidebar">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input type="text" placeholder="Search anything..." />
+              <div class="search-suggestions">
+                <div class="suggestion-group">
+                  <h4>Quick Actions</h4>
+                  <a href="#"><i class="fas fa-plus"></i> New Shipment</a>
+                  <a href="#"><i class="fas fa-truck"></i> Track Order</a>
+                </div>
+                <div class="suggestion-group">
+                  <h4>Recent Searches</h4>
+                  <a href="#"><i class="fas fa-history"></i> Order #TK4528</a>
+                  <a href="#"><i class="fas fa-history"></i> Driver John</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stats-ticker">
+            <div class="ticker-item">
+              <i class="fas fa-clock"></i>
+              <span>Active Time: 8h 45m</span>
+            </div>
+            <div class="ticker-item positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>Deliveries: +12.5%</span>
+            </div>
+            <div class="ticker-item warning">
+              <i class="fas fa-exclamation-triangle"></i>
+              <span>3 Delayed Shipments</span>
+            </div>
+          </div>
+
+          <div class="topbar-right">
+            <div class="quick-actions">
+              <button class="action-btn" title="Create New Order">
+                <i class="fas fa-plus"></i>
+              </button>
+              <button class="action-btn" title="Download Reports">
+                <i class="fas fa-download"></i>
+              </button>
+            </div>
+
+            <div class="notifications-wrapper">
+              <button class="notification-btn" id="notificationToggle">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+              </button>
+              <div class="notifications-panel" id="notificationsPanel">
+                <div class="notifications-header">
+                  <h3>Notifications</h3>
+                  <button class="mark-all-read">Mark all as read</button>
+                </div>
+                <div class="notifications-list">
+                  <a href="#" class="notification-item unread">
+                    <div class="notification-icon urgent">
+                      <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="notification-content">
+                      <p class="notification-text">
+                        Urgent: Shipment #TK4528 delayed
+                      </p>
+                      <span class="notification-time">5 minutes ago</span>
+                    </div>
+                  </a>
+                  <!-- More notification items -->
+                </div>
+                <a href="#" class="view-all">View All Notifications</a>
+              </div>
+            </div>
+
+            <div class="profile-wrapper">
+              <button class="profile-btn" id="profileToggle">
+                <img src="Images/ocdeed.png" alt="Profile" />
+                <span class="profile-name">Octavian</span>
+                <i class="fas fa-chevron-down"></i>
+              </button>
+              <div class="profile-dropdown" id="profileDropdown">
+                <div class="profile-header">
+                  <img src="Images/ocdeed.png" alt="Profile" />
+                  <div class="profile-info">
+                    <h4>Octavian Deed</h4>
+                    <p>Administrator</p>
+                  </div>
+                </div>
+                <div class="profile-menu">
+                  <a href="#"><i class="fas fa-user"></i> My Profile</a>
+                  <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                  <a href="#"><i class="fas fa-chart-line"></i> Activity Log</a>
+                  <div class="divider"></div>
+                  <a href="#" class="logout"
+                    ><i class="fas fa-sign-out-alt"></i> Logout</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+    <div class="dashboard-content">
+      <!-- Statistics Cards -->
+      <div class="dashboard-cards">
+        <div class="card">
+          <div class="card-info">
+            <h3>Total Vehicles</h3>
+            <h2>124</h2>
+            <div class="trend positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>5.2%</span>
+              <span class="period">vs last month</span>
+            </div>
+          </div>
+          <i class="fas fa-truck-moving"></i>
+        </div>
+
+        <div class="card">
+          <div class="card-info">
+            <h3>Active Vehicles</h3>
+            <h2>86</h2>
+            <div class="trend neutral">
+              <i class="fas fa-chart-line"></i>
+              <span>69% fleet utilization</span>
+            </div>
+          </div>
+          <i class="fas fa-truck"></i>
+        </div>
+
+        <div class="card">
+          <div class="card-info">
+            <h3>In Maintenance</h3>
+            <h2>12</h2>
+            <div class="trend warning">
+              <i class="fas fa-wrench"></i>
+              <span>Est. completion: 2 days</span>
+            </div>
+          </div>
+          <i class="fas fa-tools"></i>
+        </div>
+
+        <div class="card">
+          <div class="card-info">
+            <h3>Fuel Consumption</h3>
+            <h2>TZS 8,450,000</h2>
+            <div class="trend negative">
+              <i class="fas fa-arrow-down"></i>
+              <span>-3.2%</span>
+              <span class="period">vs last month</span>
+            </div>
+          </div>
+          <i class="fas fa-gas-pump"></i>
+        </div>
+      </div>
+
+      <!-- Main Content Grid -->
+      <div class="dashboard-grid">
+        <!-- Fleet List -->
+        <div class="grid-card fleet-list">
+          <div class="card-header">
+            <div class="header-left">
+              <h3>Fleet Overview</h3>
+              <span class="subtitle"
+                >Manage your vehicles and track their status</span
+              >
+            </div>
+            <div class="card-actions">
+              <button class="btn-primary" id="addVehicleBtn">
+                <i class="fas fa-plus"></i> Add Vehicle
+              </button>
+              <div class="filter-group">
+                <button class="btn-icon" title="Filter List">
+                  <i class="fas fa-filter"></i>
+                </button>
+                <button class="btn-icon" title="Download Report">
+                  <i class="fas fa-download"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Vehicle ID</th>
+                  <th>Type</th>
+                  <th>Driver</th>
+                  <th>Status</th>
+                  <th>Location</th>
+                  <th>Fuel Level</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>TZ-FL-001</td>
+                  <td>
+                    <div class="vehicle-info">
+                      <i class="fas fa-truck"></i>
+                      <span>Cargo Truck</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="driver-info">
+                      <img src="Images/driver1.jpg" alt="Driver" />
+                      <span>John Makonde</span>
+                    </div>
+                  </td>
+                  <td><span class="status active">Active</span></td>
+                  <td>Dar es Salaam</td>
+                  <td>
+                    <div class="fuel-indicator">
+                      <div class="progress">
+                        <div class="progress-bar" style="width: 75%"></div>
+                      </div>
+                      <span>75%</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="action-buttons">
+                      <button class="btn-icon small" title="Track">
+                        <i class="fas fa-location-dot"></i>
+                      </button>
+                      <button class="btn-icon small" title="Edit">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="btn-icon small" title="More">
+                        <i class="fas fa-ellipsis-v"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <!-- Additional rows would go here -->
+              </tbody>
+            </table>
+          </div>
+          <div class="table-footer">
+            <div class="pagination">
+              <button class="btn-text" disabled>
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button class="btn-text active">1</button>
+              <button class="btn-text">2</button>
+              <button class="btn-text">3</button>
+              <button class="btn-text">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+            <div class="table-info">Showing 1 to 10 of 24 entries</div>
+          </div>
+        </div>
+
+        <!-- Maintenance Schedule -->
+        <div class="grid-card maintenance-schedule">
+          <div class="card-header">
+            <h3>Maintenance Schedule</h3>
+            <button class="btn-text">View Calendar</button>
+          </div>
+          <div class="schedule-list">
+            <div class="schedule-item">
+              <div class="schedule-info">
+                <h4>TZ-FL-003</h4>
+                <p>Regular Maintenance</p>
+                <div class="schedule-meta">
+                  <span><i class="fas fa-calendar"></i> Tomorrow</span>
+                  <span><i class="fas fa-clock"></i> 09:00 AM</span>
+                  <span><i class="fas fa-map-marker-alt"></i> Main Depot</span>
+                </div>
+              </div>
+              <span class="status pending">Pending</span>
+            </div>
+
+            <div class="schedule-item">
+              <div class="schedule-info">
+                <h4>TZ-FL-007</h4>
+                <p>Tire Replacement</p>
+                <div class="schedule-meta">
+                  <span><i class="fas fa-calendar"></i> Today</span>
+                  <span><i class="fas fa-clock"></i> 02:30 PM</span>
+                  <span
+                    ><i class="fas fa-map-marker-alt"></i> Service Center</span
+                  >
+                </div>
+              </div>
+              <span class="status in-progress">In Progress</span>
+            </div>
+
+            <div class="schedule-item">
+              <div class="schedule-info">
+                <h4>TZ-FL-012</h4>
+                <p>Engine Check</p>
+                <div class="schedule-meta">
+                  <span><i class="fas fa-calendar"></i> Friday</span>
+                  <span><i class="fas fa-clock"></i> 11:00 AM</span>
+                  <span><i class="fas fa-map-marker-alt"></i> Workshop B</span>
+                </div>
+              </div>
+              <span class="status scheduled">Scheduled</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Tracking Section -->
+      <div class="dashboard-grid">
+        <div class="grid-card map-view">
+          <div class="card-header">
+            <div class="header-left">
+              <h3>Live Fleet Tracking</h3>
+              <span class="subtitle"
+                >Real-time location of all active vehicles</span
+              >
+            </div>
+            <div class="map-controls">
+              <button class="btn-icon" title="Refresh">
+                <i class="fas fa-sync"></i>
+              </button>
+              <button class="btn-icon" title="Full Screen">
+                <i class="fas fa-expand"></i>
+              </button>
+            </div>
+          </div>
+          <div id="fleet-map"></div>
+        </div>
+
+        <!-- Vehicle Analytics -->
+        <div class="grid-card analytics">
+          <div class="card-header">
+            <h3>Vehicle Analytics</h3>
+            <div class="date-range">
+              <button class="btn-text active">Week</button>
+              <button class="btn-text">Month</button>
+              <button class="btn-text">Year</button>
+            </div>
+          </div>
+          <div class="analytics-content">
+            <div class="chart-container">
+              <canvas id="fleetAnalyticsChart"></canvas>
+            </div>
+            <div class="analytics-summary">
+              <div class="summary-item">
+                <span class="label">Avg. Daily Distance</span>
+                <span class="value">254 km</span>
+                <span class="trend positive">+12.5%</span>
+              </div>
+              <div class="summary-item">
+                <span class="label">Fuel Efficiency</span>
+                <span class="value">8.2 L/100km</span>
+                <span class="trend negative">-2.3%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Vehicle Modal -->
+    <div class="modal" id="addVehicleModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Add New Vehicle</h3>
+          <button class="btn-icon" id="closeModal">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <form class="modal-body">
+          <!-- Form fields would go here -->
+        </form>
+      </div>
+    </div>
+    <script src="js/fleet-tracking.js"></script>
+    <script src="js/chat-system.js"></script>
+    <script src="js/fleet-management.js"></script>
+  </body>
+</html>

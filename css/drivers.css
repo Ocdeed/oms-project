@@ -1,0 +1,191 @@
+/* Drivers Section Specific Styles */
+.drivers-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.driver-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.driver-profile img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary-color);
+}
+
+.driver-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.driver-info h4 {
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+}
+
+.driver-info span {
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+.hours-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 120px;
+}
+
+.hours-info .progress {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+}
+
+.performance-score {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  width: fit-content;
+}
+
+.performance-score.high {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.performance-score.medium {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.performance-score.low {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.driver-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.form-group input {
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.photo-upload .upload-area {
+  width: 120px;
+  height: 120px;
+  border: 2px dashed var(--border-color);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.photo-upload .upload-area:hover {
+  border-color: var(--primary-color);
+  background: var(--bg-light);
+}
+
+.photo-upload i {
+  font-size: 1.5rem;
+  color: var(--text-light);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.btn-secondary {
+  padding: 8px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--bg-light);
+}
+
+.schedule-item .driver-brief {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.driver-brief img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.status.ongoing {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .drivers-table {
+    font-size: 0.9rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .driver-profile {
+    flex-direction: column;
+    text-align: center;
+  }
+}

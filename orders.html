@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+      integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/fleet-management.css" />
+    <link rel="stylesheet" href="css/track-shipments.css" />
+    <link rel="stylesheet" href="css/orders.css" />
+    <link rel="stylesheet" href="css/drivers.css" />
+    <script src="js/dashboard.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+    <title>ZanAir Cargo | Dashboard</title>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="brand">
+            <i class="fas fa-plane"></i>
+            <span>ZanAir OMS</span>
+          </div>
+        </div>
+
+        <div class="sidebar-user">
+          <img src="Images/ocdeed.png" alt="Profile" />
+          <div class="user-info">
+            <span class="user-name">Octavian</span>
+            <span class="user-role">Administrator</span>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="#" data-page="dashboard">
+                <i class="fas fa-home"></i><span>Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="#fleet-management.html" data-page="fleet">
+                <i class="fas fa-truck-moving"></i><span>Fleet Management</span>
+              </a>
+            </li>
+            <li >
+              <a href="/track-shipments.html"
+                ><i class="fas fa-route"></i>Track Shipments</a
+              >
+            </li class="active">
+            <li>
+              <a href="/drivers.html"><i class="fas fa-users"></i>Drivers</a>
+            </li>
+            <li>
+              <a href="/orders.html"><i class="fas fa-box"></i>Orders</a>
+            </li>
+            <li>
+              <a href="/analytics.html"><i class="fas fa-chart-line"></i>Analytics</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-message"></i>Messages</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-cog"></i>Settings</a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="topbar-left">
+            <button id="sidebar-toggle" aria-label="Toggle Sidebar">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input type="text" placeholder="Search anything..." />
+              <div class="search-suggestions">
+                <div class="suggestion-group">
+                  <h4>Quick Actions</h4>
+                  <a href="#"><i class="fas fa-plus"></i> New Shipment</a>
+                  <a href="#"><i class="fas fa-truck"></i> Track Order</a>
+                </div>
+                <div class="suggestion-group">
+                  <h4>Recent Searches</h4>
+                  <a href="#"><i class="fas fa-history"></i> Order #TK4528</a>
+                  <a href="#"><i class="fas fa-history"></i> Driver John</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stats-ticker">
+            <div class="ticker-item">
+              <i class="fas fa-clock"></i>
+              <span>Active Time: 8h 45m</span>
+            </div>
+            <div class="ticker-item positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>Deliveries: +12.5%</span>
+            </div>
+            <div class="ticker-item warning">
+              <i class="fas fa-exclamation-triangle"></i>
+              <span>3 Delayed Shipments</span>
+            </div>
+          </div>
+
+          <div class="topbar-right">
+            <div class="quick-actions">
+              <button class="action-btn" title="Create New Order">
+                <i class="fas fa-plus"></i>
+              </button>
+              <button class="action-btn" title="Download Reports">
+                <i class="fas fa-download"></i>
+              </button>
+            </div>
+
+            <div class="notifications-wrapper">
+              <button class="notification-btn" id="notificationToggle">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+              </button>
+              <div class="notifications-panel" id="notificationsPanel">
+                <div class="notifications-header">
+                  <h3>Notifications</h3>
+                  <button class="mark-all-read">Mark all as read</button>
+                </div>
+                <div class="notifications-list">
+                  <a href="#" class="notification-item unread">
+                    <div class="notification-icon urgent">
+                      <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="notification-content">
+                      <p class="notification-text">
+                        Urgent: Shipment #TK4528 delayed
+                      </p>
+                      <span class="notification-time">5 minutes ago</span>
+                    </div>
+                  </a>
+                  <!-- More notification items -->
+                </div>
+                <a href="#" class="view-all">View All Notifications</a>
+              </div>
+            </div>
+
+            <div class="profile-wrapper">
+              <button class="profile-btn" id="profileToggle">
+                <img src="Images/ocdeed.png" alt="Profile" />
+                <span class="profile-name">Octavian</span>
+                <i class="fas fa-chevron-down"></i>
+              </button>
+              <div class="profile-dropdown" id="profileDropdown">
+                <div class="profile-header">
+                  <img src="Images/ocdeed.png" alt="Profile" />
+                  <div class="profile-info">
+                    <h4>Octavian Deed</h4>
+                    <p>Administrator</p>
+                  </div>
+                </div>
+                <div class="profile-menu">
+                  <a href="#"><i class="fas fa-user"></i> My Profile</a>
+                  <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                  <a href="#"><i class="fas fa-chart-line"></i> Activity Log</a>
+                  <div class="divider"></div>
+                  <a href="#" class="logout"
+                    ><i class="fas fa-sign-out-alt"></i> Logout</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+<div class="dashboard-content">
+  <!-- Statistics Cards -->
+  <div class="dashboard-cards">
+    <div class="card">
+      <div class="card-info">
+        <h3>Total Orders</h3>
+        <h2>1,284</h2>
+        <div class="trend positive">
+          <i class="fas fa-arrow-up"></i>
+          <span>18.3%</span>
+          <span class="period">vs last month</span>
+        </div>
+      </div>
+      <i class="fas fa-shopping-cart"></i>
+    </div>
+
+    <div class="card">
+      <div class="card-info">
+        <h3>Pending Orders</h3>
+        <h2>45</h2>
+        <div class="trend neutral">
+          <i class="fas fa-clock"></i>
+          <span>Awaiting Processing</span>
+        </div>
+      </div>
+      <i class="fas fa-hourglass-half"></i>
+    </div>
+
+    <div class="card">
+      <div class="card-info">
+        <h3>Delivered Today</h3>
+        <h2>38</h2>
+        <div class="trend success">
+          <i class="fas fa-check-circle"></i>
+          <span>100% Success Rate</span>
+        </div>
+      </div>
+      <i class="fas fa-box-check"></i>
+    </div>
+
+    <div class="card">
+      <div class="card-info">
+        <h3>Total Revenue</h3>
+        <h2>TZS 8,450,000</h2>
+        <div class="trend positive">
+          <i class="fas fa-chart-line"></i>
+          <span>+12.5% this week</span>
+        </div>
+      </div>
+      <i class="fas fa-dollar-sign"></i>
+    </div>
+  </div>
+
+  <!-- Quick Actions Section -->
+  <div class="quick-actions-panel">
+    <button class="btn-primary" id="newOrderBtn">
+      <i class="fas fa-plus"></i> Create New Order
+    </button>
+    <div class="filter-actions">
+      <div class="date-filter">
+        <i class="fas fa-calendar"></i>
+        <select>
+          <option>Today</option>
+          <option>This Week</option>
+          <option>This Month</option>
+          <option>Custom Range</option>
+        </select>
+      </div>
+      <div class="search-orders">
+        <input type="text" placeholder="Search orders..." />
+        <i class="fas fa-search"></i>
+      </div>
+      <button class="btn-icon" title="Filter">
+        <i class="fas fa-filter"></i>
+      </button>
+      <button class="btn-icon" title="Export">
+        <i class="fas fa-download"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="dashboard-grid">
+    <!-- Orders List -->
+    <div class="grid-card orders-list">
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>
+              <input type="checkbox" class="select-all" />
+            </th>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Payment</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="checkbox" /></td>
+            <td>
+              <span class="order-id">#ORD-7842</span>
+              <span class="order-date">Today, 10:45 AM</span>
+            </td>
+            <td>
+              <div class="customer-info">
+                <img src="Images/customer1.jpg" alt="Customer" />
+                <div>
+                  <h4>John Doe</h4>
+                  <span>+255 123 456 789</span>
+                </div>
+              </div>
+            </td>
+            <td>Oct 15, 2023</td>
+            <td>
+              <div class="order-amount">
+                <span class="amount">TZS 245,000</span>
+                <span class="items">3 items</span>
+              </div>
+            </td>
+            <td><span class="status processing">Processing</span></td>
+            <td><span class="payment-status paid">Paid</span></td>
+            <td>
+              <div class="action-buttons">
+                <button class="btn-icon small" title="View">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button class="btn-icon small" title="Edit">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn-icon small" title="More">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <!-- More order rows would go here -->
+        </tbody>
+      </table>
+      <div class="table-footer">
+        <div class="pagination">
+          <button class="btn-text" disabled>
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="btn-text active">1</button>
+          <button class="btn-text">2</button>
+          <button class="btn-text">3</button>
+          <button class="btn-text"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="table-info">Showing 1 to 10 of 1,284 orders</div>
+      </div>
+    </div>
+
+    <!-- Order Analytics -->
+    <div class="grid-card analytics">
+      <div class="card-header">
+        <h3>Order Analytics</h3>
+        <div class="date-range">
+          <button class="btn-text active">Week</button>
+          <button class="btn-text">Month</button>
+          <button class="btn-text">Year</button>
+        </div>
+      </div>
+      <div class="analytics-content">
+        <canvas id="orderAnalyticsChart"></canvas>
+      </div>
+      <div class="analytics-summary">
+        <div class="summary-item">
+          <span class="label">Average Order Value</span>
+          <span class="value">TZS 185,000</span>
+          <span class="trend positive">+8.5%</span>
+        </div>
+        <div class="summary-item">
+          <span class="label">Completion Rate</span>
+          <span class="value">94.2%</span>
+          <span class="trend positive">+2.1%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New Order Modal -->
+<div class="modal" id="newOrderModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Create New Order</h3>
+      <button class="btn-icon" id="closeModal">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <form class="modal-body order-form">
+      <!-- Customer Information -->
+      <div class="form-section">
+        <h4>Customer Information</h4>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Customer Name</label>
+            <input type="text" required />
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Delivery Address</label>
+          <textarea required></textarea>
+        </div>
+      </div>
+
+      <!-- Order Items -->
+      <div class="form-section">
+        <h4>Order Items</h4>
+        <div class="order-items">
+          <div class="order-item">
+            <div class="item-details">
+              <select class="item-select">
+                <option>Select Item</option>
+                <!-- Items would be populated here -->
+              </select>
+              <input type="number" min="1" placeholder="Quantity" />
+              <span class="item-price">TZS 0.00</span>
+            </div>
+            <button type="button" class="btn-icon remove-item">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+        <button type="button" class="btn-secondary" id="addItemBtn">
+          <i class="fas fa-plus"></i> Add Another Item
+        </button>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="form-section">
+        <h4>Order Summary</h4>
+        <div class="order-summary">
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span class="subtotal">TZS 0.00</span>
+          </div>
+          <div class="summary-row">
+            <span>Delivery Fee</span>
+            <span class="delivery-fee">TZS 0.00</span>
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <span class="total-amount">TZS 0.00</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" id="cancelOrder">
+          Cancel
+        </button>
+        <button type="submit" class="btn-primary">Create Order</button>
+      </div>
+    </form>
+  </div>
+</div>
+</main>
+</div>  
+
+    <!-- Scripts -->
+    <script src="js/fleet-tracking.js"></script>
+    <script src="js/chat-system.js"></script>
+    <script src="js/fleet-management.js"></script>
+    <script src="js/track-shipments.js"></script>
+    <script src="js/drivers.js"></script>
+    <script src="js/orders.js"></script>
+  </body>
+</html>
+
+

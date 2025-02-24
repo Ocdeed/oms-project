@@ -1,0 +1,219 @@
+/* Quick Track Section Styles */
+.quick-track-section {
+  background: #fff;
+  padding: 25px;
+  border-radius: 16px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.search-container {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.search-container input {
+  flex: 1;
+  padding: 12px 20px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.search-container input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 115, 230, 0.1);
+}
+
+.recent-tracks {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.recent-label {
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.recent-chips {
+  display: flex;
+  gap: 10px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: var(--bg-light);
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.chip:hover {
+  background: var(--border-color);
+}
+
+.chip i {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* Tracking List Styles */
+.tracking-items {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.tracking-item {
+  background: var(--bg-light);
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.tracking-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.route-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.progress-tracker {
+  margin-bottom: 15px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-light);
+  font-size: 0.85rem;
+  margin-top: 8px;
+}
+
+.tracking-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+/* Timeline Styles */
+.timeline {
+  padding: 20px 0;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 20px;
+  padding: 15px 0;
+  position: relative;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: 35px;
+  top: 50px;
+  bottom: -15px;
+  width: 2px;
+  background: var(--border-color);
+}
+
+.timeline-item:last-child::before {
+  display: none;
+}
+
+.time {
+  min-width: 70px;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.timeline .content {
+  flex: 1;
+}
+
+.timeline .badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+}
+
+.timeline .badge.success {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.timeline h4 {
+  margin-bottom: 5px;
+}
+
+.timeline p {
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+/* Status Filter Styles */
+.status-filter {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--text-color);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.status-filter:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .search-container {
+    flex-direction: column;
+  }
+
+  .recent-tracks {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .timeline-item {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .timeline-item::before {
+    left: 15px;
+  }
+}

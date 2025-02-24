@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+      integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/fleet-management.css" />
+    <link rel="stylesheet" href="css/track-shipments.css" />
+    <link rel="stylesheet" href="css/drivers.css" />
+    <script src="js/dashboard.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+    <title>ZanAir Cargo | Dashboard</title>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="brand">
+            <i class="fas fa-plane"></i>
+            <span>ZanAir OMS</span>
+          </div>
+        </div>
+
+        <div class="sidebar-user">
+          <img src="Images/ocdeed.png" alt="Profile" />
+          <div class="user-info">
+            <span class="user-name">Octavian</span>
+            <span class="user-role">Administrator</span>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="#" data-page="dashboard">
+                <i class="fas fa-home"></i><span>Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="#fleet-management.html" data-page="fleet">
+                <i class="fas fa-truck-moving"></i><span>Fleet Management</span>
+              </a>
+            </li>
+            <li >
+              <a href="/track-shipments.html"
+                ><i class="fas fa-route"></i>Track Shipments</a
+              >
+            </li class="active">
+            <li>
+              <a href="/drivers.html"><i class="fas fa-users"></i>Drivers</a>
+            </li>
+            <li>
+              <a href="/orders.html"><i class="fas fa-box"></i>Orders</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-chart-line"></i>Analytics</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-message"></i>Messages</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-cog"></i>Settings</a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="topbar-left">
+            <button id="sidebar-toggle" aria-label="Toggle Sidebar">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input type="text" placeholder="Search anything..." />
+              <div class="search-suggestions">
+                <div class="suggestion-group">
+                  <h4>Quick Actions</h4>
+                  <a href="#"><i class="fas fa-plus"></i> New Shipment</a>
+                  <a href="#"><i class="fas fa-truck"></i> Track Order</a>
+                </div>
+                <div class="suggestion-group">
+                  <h4>Recent Searches</h4>
+                  <a href="#"><i class="fas fa-history"></i> Order #TK4528</a>
+                  <a href="#"><i class="fas fa-history"></i> Driver John</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stats-ticker">
+            <div class="ticker-item">
+              <i class="fas fa-clock"></i>
+              <span>Active Time: 8h 45m</span>
+            </div>
+            <div class="ticker-item positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>Deliveries: +12.5%</span>
+            </div>
+            <div class="ticker-item warning">
+              <i class="fas fa-exclamation-triangle"></i>
+              <span>3 Delayed Shipments</span>
+            </div>
+          </div>
+
+          <div class="topbar-right">
+            <div class="quick-actions">
+              <button class="action-btn" title="Create New Order">
+                <i class="fas fa-plus"></i>
+              </button>
+              <button class="action-btn" title="Download Reports">
+                <i class="fas fa-download"></i>
+              </button>
+            </div>
+
+            <div class="notifications-wrapper">
+              <button class="notification-btn" id="notificationToggle">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+              </button>
+              <div class="notifications-panel" id="notificationsPanel">
+                <div class="notifications-header">
+                  <h3>Notifications</h3>
+                  <button class="mark-all-read">Mark all as read</button>
+                </div>
+                <div class="notifications-list">
+                  <a href="#" class="notification-item unread">
+                    <div class="notification-icon urgent">
+                      <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="notification-content">
+                      <p class="notification-text">
+                        Urgent: Shipment #TK4528 delayed
+                      </p>
+                      <span class="notification-time">5 minutes ago</span>
+                    </div>
+                  </a>
+                  <!-- More notification items -->
+                </div>
+                <a href="#" class="view-all">View All Notifications</a>
+              </div>
+            </div>
+
+            <div class="profile-wrapper">
+              <button class="profile-btn" id="profileToggle">
+                <img src="Images/ocdeed.png" alt="Profile" />
+                <span class="profile-name">Octavian</span>
+                <i class="fas fa-chevron-down"></i>
+              </button>
+              <div class="profile-dropdown" id="profileDropdown">
+                <div class="profile-header">
+                  <img src="Images/ocdeed.png" alt="Profile" />
+                  <div class="profile-info">
+                    <h4>Octavian Deed</h4>
+                    <p>Administrator</p>
+                  </div>
+                </div>
+                <div class="profile-menu">
+                  <a href="#"><i class="fas fa-user"></i> My Profile</a>
+                  <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                  <a href="#"><i class="fas fa-chart-line"></i> Activity Log</a>
+                  <div class="divider"></div>
+                  <a href="#" class="logout"
+                    ><i class="fas fa-sign-out-alt"></i> Logout</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div class="dashboard-content">
+          <!-- Statistics Cards -->
+          <div class="dashboard-cards">
+            <div class="card">
+              <div class="card-info">
+                <h3>Total Drivers</h3>
+                <h2>45</h2>
+                <div class="trend positive">
+                  <i class="fas fa-arrow-up"></i>
+                  <span>8.2%</span>
+                  <span class="period">vs last month</span>
+                </div>
+              </div>
+              <i class="fas fa-users"></i>
+            </div>
+
+            <div class="card">
+              <div class="card-info">
+                <h3>Active on Route</h3>
+                <h2>32</h2>
+                <div class="trend neutral">
+                  <i class="fas fa-route"></i>
+                  <span>71% Utilization</span>
+                </div>
+              </div>
+              <i class="fas fa-truck-moving"></i>
+            </div>
+
+            <div class="card">
+              <div class="card-info">
+                <h3>On Break</h3>
+                <h2>8</h2>
+                <div class="trend info">
+                  <i class="fas fa-coffee"></i>
+                  <span>Scheduled Rest</span>
+                </div>
+              </div>
+              <i class="fas fa-mug-hot"></i>
+            </div>
+
+            <div class="card">
+              <div class="card-info">
+                <h3>Performance Score</h3>
+                <h2>94%</h2>
+                <div class="trend success">
+                  <i class="fas fa-chart-line"></i>
+                  <span>+2.4% this week</span>
+                </div>
+              </div>
+              <i class="fas fa-award"></i>
+            </div>
+          </div>
+
+          <!-- Main Content Grid -->
+          <div class="dashboard-grid">
+            <!-- Drivers List -->
+            <div class="grid-card drivers-list">
+              <div class="card-header">
+                <div class="header-left">
+                  <h3>Drivers Overview</h3>
+                  <span class="subtitle">Manage and monitor your drivers</span>
+                </div>
+                <div class="card-actions">
+                  <button class="btn-primary" id="addDriverBtn">
+                    <i class="fas fa-plus"></i> Add Driver
+                  </button>
+                  <div class="filter-group">
+                    <select class="status-filter">
+                      <option value="all">All Status</option>
+                      <option value="active">Active</option>
+                      <option value="on-break">On Break</option>
+                      <option value="off-duty">Off Duty</option>
+                    </select>
+                    <button class="btn-icon" title="Export List">
+                      <i class="fas fa-download"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="drivers-table">
+                  <thead>
+                    <tr>
+                      <th>Driver</th>
+                      <th>Vehicle</th>
+                      <th>Status</th>
+                      <th>Location</th>
+                      <th>Hours Today</th>
+                      <th>Performance</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="driver-profile">
+                          <img src="Images/driver1.jpg" alt="John Makonde" />
+                          <div class="driver-info">
+                            <h4>John Makonde</h4>
+                            <span>ID: DRV-001</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="vehicle-info">
+                          <i class="fas fa-truck"></i>
+                          <span>TZ-FL-001</span>
+                        </div>
+                      </td>
+                      <td><span class="status active">On Route</span></td>
+                      <td>
+                        <div class="location-info">
+                          <i class="fas fa-map-marker-alt"></i>
+                          <span>Dar es Salaam</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="hours-info">
+                          <div class="progress">
+                            <div class="progress-bar" style="width: 75%"></div>
+                          </div>
+                          <span>6h 15m</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="performance-score high">
+                          <i class="fas fa-star"></i>
+                          <span>96%</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="action-buttons">
+                          <button class="btn-icon small" title="Track">
+                            <i class="fas fa-location-dot"></i>
+                          </button>
+                          <button class="btn-icon small" title="Contact">
+                            <i class="fas fa-phone"></i>
+                          </button>
+                          <button class="btn-icon small" title="More">
+                            <i class="fas fa-ellipsis-v"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <!-- More driver rows would go here -->
+                  </tbody>
+                </table>
+              </div>
+              <div class="table-footer">
+                <div class="pagination">
+                  <button class="btn-text" disabled>
+                    <i class="fas fa-chevron-left"></i>
+                  </button>
+                  <button class="btn-text active">1</button>
+                  <button class="btn-text">2</button>
+                  <button class="btn-text">3</button>
+                  <button class="btn-text">
+                    <i class="fas fa-chevron-right"></i>
+                  </button>
+                </div>
+                <div class="table-info">Showing 1 to 10 of 45 drivers</div>
+              </div>
+            </div>
+
+            <!-- Driver Analytics -->
+            <div class="grid-card analytics">
+              <div class="card-header">
+                <h3>Performance Analytics</h3>
+                <div class="date-range">
+                  <button class="btn-text active">Week</button>
+                  <button class="btn-text">Month</button>
+                  <button class="btn-text">Year</button>
+                </div>
+              </div>
+              <div class="analytics-content">
+                <canvas id="performanceChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Driver Details Grid -->
+          <div class="dashboard-grid">
+            <!-- Active Routes Map -->
+            <div class="grid-card map-view">
+              <div class="card-header">
+                <div class="header-left">
+                  <h3>Active Routes</h3>
+                  <span class="subtitle">Live location of drivers on duty</span>
+                </div>
+                <div class="map-controls">
+                  <button class="btn-icon" title="Refresh">
+                    <i class="fas fa-sync"></i>
+                  </button>
+                  <button class="btn-icon" title="Filter Routes">
+                    <i class="fas fa-filter"></i>
+                  </button>
+                  <button class="btn-icon" title="Full Screen">
+                    <i class="fas fa-expand"></i>
+                  </button>
+                </div>
+              </div>
+              <div id="drivers-map"></div>
+            </div>
+
+            <!-- Schedule Overview -->
+            <div class="grid-card schedule-overview">
+              <div class="card-header">
+                <h3>Today's Schedule</h3>
+                <button class="btn-text">View Full Schedule</button>
+              </div>
+              <div class="schedule-list">
+                <div class="schedule-item">
+                  <div class="schedule-info">
+                    <div class="driver-brief">
+                      <img src="Images/driver2.jpg" alt="Driver" />
+                      <div>
+                        <h4>Michael Juma</h4>
+                        <span>Route: Stone Town → Nungwi</span>
+                      </div>
+                    </div>
+                    <div class="schedule-meta">
+                      <span
+                        ><i class="fas fa-clock"></i> 10:30 AM - 4:30 PM</span
+                      >
+                      <span><i class="fas fa-road"></i> 120 km</span>
+                    </div>
+                  </div>
+                  <span class="status ongoing">In Progress</span>
+                </div>
+                <!-- More schedule items -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add Driver Modal -->
+        <div class="modal" id="addDriverModal">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3>Add New Driver</h3>
+              <button class="btn-icon" id="closeModal">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <form class="modal-body driver-form">
+              <div class="form-group">
+                <label>Profile Photo</label>
+                <div class="photo-upload">
+                  <input type="file" id="driverPhoto" hidden />
+                  <label for="driverPhoto" class="upload-area">
+                    <i class="fas fa-camera"></i>
+                    <span>Click to upload</span>
+                  </label>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>First Name</label>
+                  <input type="text" required />
+                </div>
+                <div class="form-group">
+                  <label>Last Name</label>
+                  <input type="text" required />
+                </div>
+              </div>
+              <!-- More form fields -->
+              <div class="form-actions">
+                <button type="button" class="btn-secondary" id="cancelAdd">
+                  Cancel
+                </button>
+                <button type="submit" class="btn-primary">Add Driver</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/fleet-tracking.js"></script>
+    <script src="js/chat-system.js"></script>
+    <script src="js/fleet-management.js"></script>
+    <script src="js/track-shipments.js"></script>
+    <script src="js/drivers.js"></script>
+  </body>
+</html>

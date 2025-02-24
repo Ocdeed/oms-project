@@ -128,8 +128,8 @@ Distributed under the MIT License. See `LICENSE` for more information. -->
 <div align="center">
   <h3>💼 Contact</h3>
   <p>
-    Your Name - <a href="mailto:rwehumbizaoctavian23@gmail.com">your.email@example.com</a><br>
-    Project Link: <a href="https://github.com/your-username/oms-project">https://github.com/your-username/oms-project</a>
+    Your Name - <a href="mailto:rwehumbizaoctavian23@gmail.com">rwehumbizaoctavian23@gmail.com</a><br>
+    Project Link: <a href="https://github.com/Ocdeed/oms-project">https://github.com/Ocdeed/oms-project</a>
   </p>
   
   [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white)](https://linkedin.com/in/your-profile)
